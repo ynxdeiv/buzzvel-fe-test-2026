@@ -112,7 +112,7 @@ docs/rules/            the conventions this project follows (also used as AI ins
 - **Mobile LCP:** 3.2 s in Lighthouse's simulated slow 4G. Almost all of it is the hero photo download
   (desktop: 0.7 s).
 - **Browser coverage:** the automated checks ran in Chromium and WebKit (Safari's engine), but not in Firefox.
-- **Approximate time spent:** ~__ hours.
+- **Approximate time spent:** about 4 hours in one session on November 13, 2026 (first commit 10:31, last 14:17), working with the AI tools described below.
 
 ## AI tools
 
