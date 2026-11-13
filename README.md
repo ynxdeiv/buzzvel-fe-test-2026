@@ -1,36 +1,126 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Luma — Buzzvel Front-End Coding Challenge (November 2026)
 
-## Getting Started
+A single responsive landing page built from the supplied Figma design with **Next.js 16 (App Router), React 19,
+TypeScript (strict) and Tailwind CSS v4**.
 
-First, run the development server:
+|                 | Mobile                                                        | Desktop                                                         |
+| --------------- | ------------------------------------------------------------- | --------------------------------------------------------------- |
+| Lighthouse      | ![Lighthouse mobile](docs/screenshots/lighthouse-mobile.webp) | ![Lighthouse desktop](docs/screenshots/lighthouse-desktop.webp) |
+| LCP / CLS / TBT | 3.2 s / 0 / 150 ms (simulated slow 4G)                        | 0.7 s / 0 / 0 ms                                                |
+
+Full-page screenshots: [375](docs/screenshots/site-375.webp) · [768](docs/screenshots/site-768.webp) ·
+[1024](docs/screenshots/site-1024.webp) · [1440](docs/screenshots/site-1440.webp) · form
+[errors](docs/screenshots/form-errors.webp) / [success](docs/screenshots/form-toast-success.webp) /
+[failure](docs/screenshots/form-toast-error.webp).
+
+## Getting started
+
+Requirements: **Node.js 22.13+** (24 LTS recommended, see `.nvmrc`) and **pnpm 10** (`corepack enable`).
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+pnpm dev          # http://localhost:3000
+pnpm build        # production build (static page)
+pnpm start        # serve the production build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+No environment variables are required. Images are read from the public Prismic API, so `dev` and `build` need
+internet access. Optional variables are documented in [`.env.example`](.env.example).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Script              | What it does                                    |
+| ------------------- | ----------------------------------------------- |
+| `pnpm lint`         | ESLint (Next.js config)                         |
+| `pnpm typecheck`    | Generates Next route types, then `tsc --noEmit` |
+| `pnpm test`         | Vitest (form action tests)                      |
+| `pnpm format:check` | Prettier, with Tailwind class sorting           |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+GitHub Actions runs all of them, plus `pnpm build`, on every push and pull request.
 
-## Learn More
+## How it is built
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+  app/                 layout (fonts, metadata, skip link, toaster) and the page
+  components/
+    ui/                design-system primitives: Button, Heading, Text, Section, Icon, FormField, PrismicImage…
+    layout/            Header, MobileNav (native <dialog>), Footer, SkipLink
+    sections/          one folder per Figma section; they only receive typed props
+    forms/             ContactForm + RHF-bound fields (Form, InputField, TextareaField, SubmitButton)
+  content/landing.ts   all page copy, typed
+  hooks/               useZodForm, useActionSubmit
+  lib/                 Prismic fetcher, Zod schema, Server Action factory, SQLite access
+docs/rules/            the conventions this project follows (also used as AI instructions)
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Design tokens.** Every Figma color, text style and shadow is a Tailwind v4 `@theme` variable in
+  `globals.css`. Components never use raw hex values or arbitrary font sizes. Sections compose `ui/` primitives
+  with `cva` variants.
+- **Images come from Prismic.** A `landing_images` singleton holds every photo along with its alt text.
+  `PrismicImage` serves them as AVIF/WebP with responsive `srcset`/`sizes`. The page is fully static:
+  `'use cache'` + `cacheLife("max")`, refreshed by a Prismic webhook on `/api/revalidate`, which requires
+  `PRISMIC_WEBHOOK_SECRET`. Copy stays in typed local content, since the brief says a CMS is not required.
+- **Contact form.** One Zod schema validates in the browser (React Hook Form + `zodResolver`). A Server Action
+  built with `createFormAction(schema, handler)` validates again on the server, so tampered requests are
+  rejected with inline field errors. Valid messages are stored in SQLite through Node's built-in `node:sqlite`,
+  which needs no native dependency. Sonner toasts report success or failure. Field errors stay next to their
+  field, focus moves to the first invalid one, and double submits are ignored.
+- **Accessibility and keyboard.**
+  - Skip link, landmarks and a correct heading order.
+  - A single focus ring token, with a different color on dark sections.
+  - The mobile menu is a native `<dialog>`: it traps focus, closes on Esc and returns focus to its trigger.
+  - Cards use stretched links, stats use a `<dl>`, and the testimonial uses `<figure>`/`<blockquote>`.
+  - Transitions and smooth scrolling respect `prefers-reduced-motion`.
+- **Performance.**
+  - `next/font` with `display: swap` and only the weights that are used.
+  - Only the hero image is preloaded with `fetchPriority="high"`; everything else lazy-loads.
+  - No client JavaScript besides the menu, the form and the toaster.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Decisions and deviations from the design
 
-## Deploy on Vercel
+- **Step labels:** the desktop design labels all three steps "STEP 01". I used 01/02/03, as on mobile.
+- **Form copy:** the mobile form copy is in Portuguese, so I used the English copy from desktop.
+- **Error color:** the design has none, and its orange fails contrast, so I added `feedback-error` (#c0341d,
+  5.6:1). Two design colors were also nudged by a barely visible amount to pass WCAG AA:
+  - `text-tertiary` #6d7384 → #686e7f (4.45 → 4.79:1);
+  - `text-white-secondary` #e7e7ec → #ececf0 (4.46 → 4.66:1).
+- **Hero at 1024 px:** the hero stacks until 1280 px. At 1024 px the 500 px visual does not fit next to the
+  headline without clipping.
+- **Mobile menu:** the design shows the hamburger icon but not the open menu, so the panel follows the page's
+  existing styles.
+- **Links:** they point to sections of the page (Courses, Community, About, Contact). Pages outside the scope
+  use `#`.
+- **Prismic preview:** I removed the Prismic preview toolbar and the slice-simulator routes, because they added
+  a third-party script to every visit.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Known gaps
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **SQLite in production:** it works locally and on any server with a writable disk. On read-only/serverless
+  hosts such as Vercel it falls back to the temp folder, so messages are not persisted. A real deployment
+  would use a hosted database such as Postgres or Turso.
+- **No spam protection:** the form has no rate limiting or spam protection.
+- **Node warning:** on Node 22/24, `node:sqlite` prints an `ExperimentalWarning` at startup. It is harmless.
+- **Mobile LCP:** 3.2 s in Lighthouse's simulated slow 4G. Almost all of it is the hero photo download
+  (desktop: 0.7 s).
+- **Browser coverage:** automated visual, keyboard and form checks ran in Chromium. Safari and Firefox were
+  not tested with the same scripts.
+- **Approximate time spent:** ~__ hours.
+
+## AI tools
+
+I used **Claude Code** (Anthropic) as a pair programmer throughout:
+
+- **Figma MCP:** read the design (frames, variables, assets) and exported section screenshots to compare against.
+- **Prismic MCP and CLI:** modelled the `landing_images` type, uploaded the images with alt text and published them.
+- **Implementation:** components, the form stack and the project rules in `docs/rules/`, which also served as
+  instructions for the AI.
+
+How the result was checked:
+
+- I reviewed every change.
+- `format:check`, `lint`, `typecheck`, `test` and `build` all pass, locally and in CI.
+- Playwright scripts captured every section at 1280 and 402 px, compared side by side with the Figma exports.
+  This caught several issues: a wrapping rating badge, horizontal overflow at 1024 px and a gallery offset.
+- An automated keyboard pass checked the full Tab/Shift+Tab order, the skip link, the menu's focus trap and Esc,
+  and that focus returns to the trigger.
+- Form scenarios: empty, invalid, a tampered request rejected by the server, offline, and double submit.
+- Lighthouse runs on mobile and desktop.
