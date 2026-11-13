@@ -1,26 +1,122 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * Design tokens from the Buzzvel FE Test 2026 Figma file.
+ * Names mirror the Figma variables (typo "backgrounnd" fixed to "background").
+ */
+@theme {
+  /* Colors */
+  --color-text-primary: #171b2c;
+  --color-text-secondary: #656770;
+  --color-text-tertiary: #686e7f; /* Figma #6d7384 is 4.45:1 on the cream background; nudged to pass WCAG AA (4.79:1) */
+  --color-text-white-primary: #ffffff;
+  --color-text-white-secondary: #ececf0; /* Figma #e7e7ec is 4.46:1 on primary blue; nudged to pass WCAG AA (4.66:1) */
+  --color-text-white-tertiary: #9e9faa;
+  --color-primary-blue: #3157f6;
+  --color-primary-blue-light: #e2e8ff;
+  --color-primary-orange: #ff704d;
+  --color-secondary-yellow: #ffee7e;
+  --color-secondary-mustard: #e9d659; /* unbound in Figma: step 3 icon dot */
+  --color-background-white: #ffffff;
+  --color-background-light-yellow: #f9f8f3;
+  --color-background-yellow: #fff1c2;
+  --color-background-orange: #ffcb9f;
+  --color-background-darkblue: #171b2c;
+  --color-line-1: #dbdfeb;
+  /* Not in Figma: accessible form error color (5.6:1 on white, WCAG AA) */
+  --color-feedback-error: #c0341d;
+
+  /* Fonts (next/font variables set on <html>) */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-plus-jakarta-sans), ui-sans-serif, system-ui, sans-serif;
+
+  /* Typography — Desktop styles */
+  --text-desktop-h1: 4rem;
+  --text-desktop-h1--line-height: 4.375rem;
+  --text-desktop-h1--letter-spacing: -0.1rem;
+  --text-desktop-h1--font-weight: 800;
+  --text-desktop-h2: 3.5rem;
+  --text-desktop-h2--line-height: 4rem;
+  --text-desktop-h2--letter-spacing: -0.0875rem;
+  --text-desktop-h2--font-weight: 800;
+  --text-desktop-h3: 3rem;
+  --text-desktop-h3--line-height: 3.5rem;
+  --text-desktop-h3--letter-spacing: -0.075rem;
+  --text-desktop-h3--font-weight: 800;
+  --text-desktop-h5: 1.25rem;
+  --text-desktop-h5--line-height: 2rem;
+  --text-desktop-h5--font-weight: 700;
+  --text-desktop-quotes: 1.875rem;
+  --text-desktop-quotes--line-height: 2.75rem;
+  --text-desktop-quotes--letter-spacing: -0.046875rem;
+  --text-desktop-quotes--font-weight: 600;
+  --text-desktop-subtitle-1: 1.125rem;
+  --text-desktop-subtitle-1--line-height: 1.75rem;
+  --text-desktop-subtitle-2: 1rem;
+  --text-desktop-subtitle-2--line-height: 1.75rem;
+
+  /* Typography — Mobile styles */
+  --text-mobile-h1: 2.5rem;
+  --text-mobile-h1--line-height: 2.75rem;
+  --text-mobile-h1--letter-spacing: -0.0625rem;
+  --text-mobile-h1--font-weight: 800;
+  --text-mobile-h2: 2.25rem;
+  --text-mobile-h2--line-height: 2.5rem;
+  --text-mobile-h2--letter-spacing: -0.05625rem;
+  --text-mobile-h2--font-weight: 800;
+  --text-mobile-h3: 2rem;
+  --text-mobile-h3--line-height: 2.25rem;
+  --text-mobile-h3--letter-spacing: -0.05rem;
+  --text-mobile-h3--font-weight: 800;
+  --text-mobile-h5: 1.25rem;
+  --text-mobile-h5--line-height: 1.75rem;
+  --text-mobile-h5--font-weight: 700;
+  --text-mobile-quotes: 1.25rem;
+  --text-mobile-quotes--line-height: 2rem;
+  --text-mobile-quotes--font-weight: 600;
+  --text-mobile-subtitle-1: 1rem;
+  --text-mobile-subtitle-1--line-height: 1.625rem;
+  --text-mobile-subtitle-2: 0.875rem;
+  --text-mobile-subtitle-2--line-height: 1.5rem;
+
+  /* Typography — shared styles */
+  --text-body-1: 0.875rem;
+  --text-body-1--line-height: 1.5rem;
+  --text-overline: 0.75rem;
+  --text-overline--line-height: 1rem;
+  --text-overline--letter-spacing: 0.09rem;
+  --text-overline--font-weight: 600;
+  --text-caption: 0.8125rem;
+  --text-caption--line-height: 1.21875rem;
+
+  /* Layout */
+  --container-page: 80rem; /* 1280px frame, 1120px content with 80px gutters */
+
+  /* Shadows */
+  --shadow-badge: 0 4px 12px rgb(0 0 0 / 0.1);
+  --shadow-card: 0 12px 16px rgb(23 27 44 / 0.04);
+  --shadow-photo: 0 3.2px 4.8px rgb(0 0 0 / 0.1), 0 0 3.2px rgb(0 0 0 / 0.07); /* Shadow/Dark/M at gallery scale */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    @apply bg-background-light-yellow font-sans text-text-primary antialiased;
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /* One consistent focus indicator; dark sections override --focus-ring. */
+  :focus-visible {
+    outline: 2px solid var(--focus-ring, var(--color-primary-blue));
+    outline-offset: 2px;
+  }
+
+  /* Lock page scroll while a modal dialog (mobile menu) is open. */
+  body:has(dialog[open]) {
+    overflow: hidden;
+  }
 }
