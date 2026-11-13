@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { SkipLink } from "@/components/layout/SkipLink";
+import { Toaster } from "@/components/ui/Toaster";
 import "./globals.css";
 
 const inter = Inter({
@@ -52,6 +53,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body>
         <SkipLink />
         {children}
+        <Toaster />
       </body>
     </html>
   );

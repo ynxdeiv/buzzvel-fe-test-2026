@@ -120,3 +120,22 @@
     overflow: hidden;
   }
 }
+
+/*
+ * Sonner toasts: map its theme variables to our tokens. Sonner injects unlayered CSS,
+ * so this block stays unlayered and uses a more specific selector to win.
+ */
+:root [data-sonner-toaster][data-sonner-theme] {
+  --normal-bg: var(--color-background-white);
+  --normal-text: var(--color-text-primary);
+  --normal-border: var(--color-line-1);
+  font-family: var(--font-sans);
+}
+
+:root [data-sonner-toast][data-type="success"] [data-icon] {
+  color: var(--color-primary-blue);
+}
+
+:root [data-sonner-toast][data-type="error"] [data-icon] {
+  color: var(--color-feedback-error);
+}
