@@ -1,0 +1,57 @@
+{
+  "format": "custom",
+  "id": "landing_images",
+  "json": {
+    "Main": {
+      "hero_image": {
+        "config": {
+          "label": "Hero image"
+        },
+        "type": "Image"
+      },
+      "featured_course_image": {
+        "config": {
+          "label": "Featured course image"
+        },
+        "type": "Image"
+      },
+      "testimonial_avatar": {
+        "config": {
+          "label": "Testimonial avatar"
+        },
+        "type": "Image"
+      },
+      "learner_avatars": {
+        "config": {
+          "fields": {
+            "avatar": {
+              "config": {
+                "label": "Avatar"
+              },
+              "type": "Image"
+            }
+          },
+          "label": "Learner avatars (hero uses the first 3, final CTA uses 4)"
+        },
+        "type": "Group"
+      },
+      "people_gallery": {
+        "config": {
+          "fields": {
+            "photo": {
+              "config": {
+                "label": "Photo"
+              },
+              "type": "Image"
+            }
+          },
+          "label": "People gallery (10 photos, column order)"
+        },
+        "type": "Group"
+      }
+    }
+  },
+  "label": "Landing Images",
+  "repeatable": false,
+  "status": true
+}
