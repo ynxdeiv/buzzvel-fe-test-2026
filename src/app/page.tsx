@@ -4,6 +4,7 @@ import { Categories } from "@/components/sections/Categories/Categories";
 import { FeaturedCourse } from "@/components/sections/FeaturedCourse/FeaturedCourse";
 import { Hero } from "@/components/sections/Hero/Hero";
 import { HowItWorks } from "@/components/sections/HowItWorks/HowItWorks";
+import { Testimonial } from "@/components/sections/Testimonial/Testimonial";
 import {
   categories,
   categoriesIntro,
@@ -13,6 +14,7 @@ import {
   howItWorksIntro,
   navigation,
   steps,
+  testimonial,
 } from "@/content/landing";
 import { getLandingImages } from "@/lib/prismic/getLandingImages";
 
@@ -28,6 +30,7 @@ export default async function HomePage() {
         <Categories intro={categoriesIntro} categories={categories} />
         <FeaturedCourse content={featuredCourse} image={images.featured_course_image} />
         <HowItWorks intro={howItWorksIntro} steps={steps} />
+        <Testimonial content={testimonial} avatar={images.testimonial_avatar} />
       </main>
       <Footer content={footer} />
     </>
