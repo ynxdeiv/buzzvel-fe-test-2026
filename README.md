@@ -3,7 +3,7 @@
 A single responsive landing page built from the supplied Figma design with **Next.js 16 (App Router), React 19,
 TypeScript (strict) and Tailwind CSS v4**.
 
-**Live preview:** https://buzzvel-fe-test-2026-psi.vercel.app (deployed on Vercel from `main`; every pull request gets
+**Live preview:** https://buzzvel.deiv.com.br (deployed on Vercel from `main`; every pull request gets
 its own preview deployment).
 
 |                 | Mobile                                                        | Desktop                                                         |
