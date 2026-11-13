@@ -18,7 +18,7 @@ Full-page screenshots: [375](docs/screenshots/site-375.webp) · [768](docs/scree
 
 ## Getting started
 
-Requirements: **Node.js 22.13+** (24 LTS recommended, see `.nvmrc`) and **pnpm 10** (`corepack enable`).
+Requirements: **Node.js 22.13+** (26 LTS recommended, see `.nvmrc`) and **pnpm 10** (`corepack enable`).
 
 ```bash
 pnpm install
@@ -104,7 +104,7 @@ docs/rules/            the conventions this project follows (also used as AI ins
   hosts such as Vercel (including the live preview) it falls back to the temp folder, so messages are not
   persisted. A real deployment would use a hosted database such as Postgres or Turso.
 - **No spam protection:** the form has no rate limiting or spam protection.
-- **Node warning:** on Node 22/24, `node:sqlite` prints an `ExperimentalWarning` at startup. It is harmless.
+- **Node warning:** `node:sqlite` is still marked experimental, so Node may print an `ExperimentalWarning` at startup. It is harmless.
 - **Mobile LCP:** 3.2 s in Lighthouse's simulated slow 4G. Almost all of it is the hero photo download
   (desktop: 0.7 s).
 - **Browser coverage:** automated visual, keyboard and form checks ran in Chromium. Safari and Firefox were
