@@ -6,6 +6,9 @@ TypeScript (strict) and Tailwind CSS v4**.
 **Live preview:** https://buzzvel.deiv.com.br (deployed on Vercel from `main`; every pull request gets
 its own preview deployment).
 
+**Video walkthrough (1:11):** https://drive.google.com/file/d/1sFlvLyWZass0xjQ9-Yh8YZcyJZM2eU4N/view?usp=drivesdk
+(Figma vs. live page, keyboard navigation, the responsive layout, the mobile menu and the contact form).
+
 |                 | Mobile                                                        | Desktop                                                         |
 | --------------- | ------------------------------------------------------------- | --------------------------------------------------------------- |
 | Lighthouse      | ![Lighthouse mobile](docs/screenshots/lighthouse-mobile.webp) | ![Lighthouse desktop](docs/screenshots/lighthouse-desktop.webp) |
@@ -122,6 +125,8 @@ I used **Claude Code** (Anthropic) as a pair programmer throughout:
 - **Prismic MCP and CLI:** modelled the `landing_images` type, uploaded the images with alt text and published them.
 - **Implementation:** components, the form stack and the project rules in `docs/rules/`, which also served as
   instructions for the AI.
+- **Video walkthrough:** edited with HyperFrames from Playwright captures of the live site; the English voiceover
+  is AI-generated with ElevenLabs.
 
 How the result was checked:
 
