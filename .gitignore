@@ -43,3 +43,6 @@ next-env.d.ts
 
 # local Figma cache (screenshots, raw assets, design context)
 /docs/figma/
+
+# local SQLite database (contact form messages)
+/data/
