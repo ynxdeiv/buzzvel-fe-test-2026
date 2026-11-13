@@ -3,6 +3,9 @@
 A single responsive landing page built from the supplied Figma design with **Next.js 16 (App Router), React 19,
 TypeScript (strict) and Tailwind CSS v4**.
 
+**Live preview:** https://buzzvel-fe-test-2026-psi.vercel.app (deployed on Vercel from `main`; every pull request gets
+its own preview deployment).
+
 |                 | Mobile                                                        | Desktop                                                         |
 | --------------- | ------------------------------------------------------------- | --------------------------------------------------------------- |
 | Lighthouse      | ![Lighthouse mobile](docs/screenshots/lighthouse-mobile.webp) | ![Lighthouse desktop](docs/screenshots/lighthouse-desktop.webp) |
@@ -74,6 +77,9 @@ docs/rules/            the conventions this project follows (also used as AI ins
   - `next/font` with `display: swap` and only the weights that are used.
   - Only the hero image is preloaded with `fetchPriority="high"`; everything else lazy-loads.
   - No client JavaScript besides the menu, the form and the toaster.
+- **Sharing and metadata.** Title, description, a favicon derived from the logo, and an Open Graph/X image
+  (`opengraph-image.tsx`). The image is generated with `next/og` from the hero copy and the Prismic photo, and
+  prerendered at build time.
 
 ## Decisions and deviations from the design
 
@@ -95,8 +101,8 @@ docs/rules/            the conventions this project follows (also used as AI ins
 ## Known gaps
 
 - **SQLite in production:** it works locally and on any server with a writable disk. On read-only/serverless
-  hosts such as Vercel it falls back to the temp folder, so messages are not persisted. A real deployment
-  would use a hosted database such as Postgres or Turso.
+  hosts such as Vercel (including the live preview) it falls back to the temp folder, so messages are not
+  persisted. A real deployment would use a hosted database such as Postgres or Turso.
 - **No spam protection:** the form has no rate limiting or spam protection.
 - **Node warning:** on Node 22/24, `node:sqlite` prints an `ExperimentalWarning` at startup. It is harmless.
 - **Mobile LCP:** 3.2 s in Lighthouse's simulated slow 4G. Almost all of it is the hero photo download
