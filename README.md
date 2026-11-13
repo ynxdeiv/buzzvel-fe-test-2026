@@ -73,6 +73,10 @@ docs/rules/            the conventions this project follows (also used as AI ins
   - The mobile menu is a native `<dialog>`: it traps focus, closes on Esc and returns focus to its trigger.
   - Cards use stretched links, stats use a `<dl>`, and the testimonial uses `<figure>`/`<blockquote>`.
   - Transitions and smooth scrolling respect `prefers-reduced-motion`.
+  - Every link, button and field has an accessible name: visible text, `alt`, `aria-label` or `<label>`.
+  - **Testing with Safari on macOS:** by default Safari moves Tab only between form fields. Use **Option+Tab**, or
+    turn on Safari › Settings › Advanced › "Press Tab to highlight each item on a webpage". Chrome, Edge and
+    Firefox (with macOS keyboard navigation on) reach every link and button with Tab.
 - **Performance.**
   - `next/font` with `display: swap` and only the weights that are used.
   - Only the hero image is preloaded with `fetchPriority="high"`; everything else lazy-loads.
@@ -107,8 +111,7 @@ docs/rules/            the conventions this project follows (also used as AI ins
 - **Node warning:** `node:sqlite` is still marked experimental, so Node may print an `ExperimentalWarning` at startup. It is harmless.
 - **Mobile LCP:** 3.2 s in Lighthouse's simulated slow 4G. Almost all of it is the hero photo download
   (desktop: 0.7 s).
-- **Browser coverage:** automated visual, keyboard and form checks ran in Chromium. Safari and Firefox were
-  not tested with the same scripts.
+- **Browser coverage:** the automated checks ran in Chromium and WebKit (Safari's engine), but not in Firefox.
 - **Approximate time spent:** ~__ hours.
 
 ## AI tools
@@ -126,7 +129,9 @@ How the result was checked:
 - `format:check`, `lint`, `typecheck`, `test` and `build` all pass, locally and in CI.
 - Playwright scripts captured every section at 1280 and 402 px, compared side by side with the Figma exports.
   This caught several issues: a wrapping rating badge, horizontal overflow at 1024 px and a gallery offset.
-- An automated keyboard pass checked the full Tab/Shift+Tab order, the skip link, the menu's focus trap and Esc,
-  and that focus returns to the trigger.
+- An automated keyboard pass checked the full Tab/Shift+Tab order (36 stops in Chromium, and the same 36 with
+  Option+Tab in WebKit), the skip link, the menu's focus trap and Esc, and that focus returns to the trigger.
+- axe-core (WCAG 2.0/2.1/2.2 A and AA plus best practices) on the live site: 0 violations, with every link, button,
+  image and field correctly named.
 - Form scenarios: empty, invalid, a tampered request rejected by the server, offline, and double submit.
 - Lighthouse runs on mobile and desktop.
