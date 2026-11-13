@@ -39,6 +39,12 @@ Build one reusable `ui/Tabs` if the design has tabs.
 - ArrowLeft/ArrowRight move between tabs (wrapping), Home/End go to first/last. Automatic activation on focus.
 - Inactive panels use `hidden`.
 
+## Testing
+
+- Test in Chrome/Edge, or in Safari with **Option+Tab**. By default, Safari on macOS only tabs between form fields;
+  that is a browser setting (Settings › Advanced › "Press Tab to highlight each item"), not a page bug.
+- Never "fix" it by adding `tabindex` to links or buttons: they are already focusable.
+
 ## Other widgets
 
 - Accordion: `<button aria-expanded aria-controls>` (or `details/summary`); Enter/Space toggle.
