@@ -4,6 +4,7 @@ import { Categories } from "@/components/sections/Categories/Categories";
 import { FeaturedCourse } from "@/components/sections/FeaturedCourse/FeaturedCourse";
 import { Hero } from "@/components/sections/Hero/Hero";
 import { HowItWorks } from "@/components/sections/HowItWorks/HowItWorks";
+import { People } from "@/components/sections/People/People";
 import { Testimonial } from "@/components/sections/Testimonial/Testimonial";
 import {
   categories,
@@ -13,6 +14,7 @@ import {
   hero,
   howItWorksIntro,
   navigation,
+  peopleIntro,
   steps,
   testimonial,
 } from "@/content/landing";
@@ -31,6 +33,7 @@ export default async function HomePage() {
         <FeaturedCourse content={featuredCourse} image={images.featured_course_image} />
         <HowItWorks intro={howItWorksIntro} steps={steps} />
         <Testimonial content={testimonial} avatar={images.testimonial_avatar} />
+        <People intro={peopleIntro} photos={images.people_gallery.map((item) => item.photo)} />
       </main>
       <Footer content={footer} />
     </>
