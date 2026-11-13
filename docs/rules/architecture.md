@@ -9,9 +9,14 @@ src/
     layout/             # Header, Footer, MobileNav, SkipLink
     sections/           # one folder per Figma section (Hero/, Features/, ...)
                         # compose ui/ primitives, receive content via props
-    forms/              # RHF forms (client components)
+    forms/              # feature forms (client components)
+      fields/           # RHF-bound Form, InputField, TextareaField, SubmitButton
   content/              # typed local/mock content (text, links, lists)
+  hooks/                # reusable client hooks (useZodForm, useActionSubmit)
   lib/
+    actions/            # Server Actions ("use server", built with createFormAction)
+    forms/              # createFormAction: Zod-validated Server Action factory
+    db/                 # SQLite access (server-only)
     prismic/            # client + cached fetchers
     schemas/            # Zod schemas
     utils.ts            # cn() and small helpers

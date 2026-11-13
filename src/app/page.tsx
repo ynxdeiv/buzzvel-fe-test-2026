@@ -1,6 +1,7 @@
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { Categories } from "@/components/sections/Categories/Categories";
+import { Contact } from "@/components/sections/Contact/Contact";
 import { FeaturedCourse } from "@/components/sections/FeaturedCourse/FeaturedCourse";
 import { FinalCta } from "@/components/sections/FinalCta/FinalCta";
 import { Hero } from "@/components/sections/Hero/Hero";
@@ -10,6 +11,7 @@ import { Testimonial } from "@/components/sections/Testimonial/Testimonial";
 import {
   categories,
   categoriesIntro,
+  contact,
   featuredCourse,
   finalCta,
   footer,
@@ -36,6 +38,7 @@ export default async function HomePage() {
         <HowItWorks intro={howItWorksIntro} steps={steps} />
         <Testimonial content={testimonial} avatar={images.testimonial_avatar} />
         <People intro={peopleIntro} photos={images.people_gallery.map((item) => item.photo)} />
+        <Contact content={contact} />
         <FinalCta content={finalCta} avatars={avatars.slice(0, 4)} />
       </main>
       <Footer content={footer} />
