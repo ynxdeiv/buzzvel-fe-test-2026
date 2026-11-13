@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { Toaster } from "@/components/ui/Toaster";
+import { brandColors, siteUrl } from "@/lib/brand";
 import "./globals.css";
 
 const inter = Inter({
@@ -23,6 +24,7 @@ const description =
   "Short, practical courses taught by people who do the work every day. Learn design, technology, business and more — one focused lesson at a time.";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title,
   description,
   applicationName: "Luma",
@@ -40,11 +42,8 @@ export const metadata: Metadata = {
   },
 };
 
-/** Browser UI color. Metadata can't read CSS variables, so this mirrors --color-background-light-yellow. */
-const THEME_COLOR = "#f9f8f3";
-
 export const viewport: Viewport = {
-  themeColor: THEME_COLOR,
+  themeColor: brandColors.backgroundLightYellow,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
