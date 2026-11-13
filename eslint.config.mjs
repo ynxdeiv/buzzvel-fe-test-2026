@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Local Figma cache (reference code, not part of the app):
+    "docs/**",
   ]),
 ]);
 
